@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pet Tools</title>
+<style>
+body{font-family:sans-serif;padding:20px;background:#f9fafb}
+textarea,select,button{width:100%;margin-top:10px;padding:10px}
+.box{background:white;padding:15px;border-radius:10px;margin-bottom:20px}
+</style>
+</head>
+
+<body>
+
+<h2>Fix My Prompt</h2>
+
+<div class="box">
+<select id="type">
+<option value="sales">Sales</option>
+<option value="content">Content</option>
+</select>
+
+<textarea id="input" placeholder="Type what you want..."></textarea>
+
+<button onclick="fix()">Fix My Prompt</button>
+
+<pre id="output"></pre>
+</div>
+
+<h2>Are You Ready for a Dog?</h2>
+
+<div class="box">
+<select class="q"><option value="0">8+ hours alone</option><option value="10">4-6 hours</option><option value="15">0-4 hours</option></select>
+<select class="q"><option value="0">Low budget</option><option value="10">Medium</option><option value="15">High</option></select>
+<select class="q"><option value="0">Little time</option><option value="10">Some time</option><option value="15">Lots of time</option></select>
+
+<button onclick="score()">Check Score</button>
+
+<h3 id="score"></h3>
+<p id="advice"></p>
+</div>
+
+<script>
+function fix(){
+let text=document.getElementById("input").value;
+let type=document.getElementById("type").value;
+
+let prompt="Act as an expert.\n\nHelp with:\n"+text+"\n\nMake it clear, structured, and useful.";
+
+if(type==="sales"){
+prompt="Act as a copywriter.\n\nHelp with:\n"+text+"\n\nInclude benefits, emotion, and CTA.";
+}
+
+document.getElementById("output").innerText=prompt;
+}
+
+function score(){
+let total=0;
+document.querySelectorAll(".q").forEach(q=>total+=Number(q.value));
+let percent=Math.round(total/45*100);
+
+document.getElementById("score").innerText=percent+"% Ready";
+
+if(percent<50){
+document.getElementById("advice").innerText="You need more preparation before getting a dog.";
+}else{
+document.getElementById("advice").innerText="You're on the right track, just improve a few areas.";
+}
+}
+</script>
+
+</body>
+</html>
